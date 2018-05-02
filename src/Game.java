@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Random;
 
 public class Game implements ChooseBoardListener, ActionBoardListener {
@@ -92,7 +90,6 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
                 return;
             }
 
-
             if (y - 1 >= 0 && !stateBoard[y - 1][x].getOpen()) {
                 eatFreeCell(x, y - 1);
             }
@@ -113,7 +110,6 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
                 eatFreeCell(x + 1, y + 1);
             }
         }
-
     }
 
     @Override
@@ -130,7 +126,6 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
             }
         } else {
             eatFreeCell(x, y);
-            // mo het o trong
             if (countCellOpen == column * row - totalMine) {
                 board.onGameOver(true);
                 if (mainFrame.onGameOver(true) == JOptionPane.OK_OPTION) {
@@ -165,7 +160,6 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
         mainFrame.setCountFlag(countMark);
         mainFrame.repaint();
     }
-
 
     private void createBoard(int row, int column, int mine) {
         stateBoard = new Cell[row][column];
@@ -211,7 +205,6 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
                         if (i + 1 < row && j - 1 >= 0 && stateBoard[i + 1][j - 1].getBom()) {
                             count++;
                         }
-
                         stateBoard[i][j].setValue(count);
                     }
                 }
@@ -254,14 +247,12 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
         board.onRestartGame();
         mainFrame.setCountFlag(totalMine);
         mainFrame.onRestartGame();
-
     }
 
     @Override
     public void clickRestart() {
         restartGame();
     }
-
 
 
     @Override
@@ -272,8 +263,7 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
         restartGame();
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        Icons.loadIcon();
+    public static void main(String[] args) {
         Game game = new Game();
     }
 }

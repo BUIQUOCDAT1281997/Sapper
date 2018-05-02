@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class MenuGame extends JPanel {
 
     private final Color COLORBK = new Color(249, 175, 57);
-    private final Color COLORLINE = new Color(220,236,240);
+    private final Color COLORLINE = new Color(220, 236, 240);
 
     private ChooseBoardListener chooseBoardListener;
 
@@ -14,14 +14,14 @@ public class MenuGame extends JPanel {
     private JRadioButton jRadioMin5;
 
     private int sizeBoard = 8;
-    private int mines=10;
+    private int mines = 10;
 
 
     public MenuGame() {
 
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setPreferredSize(new Dimension(250, 320));
-        this.setBackground(new Color(48,56,58));
+        this.setBackground(new Color(48, 56, 58));
         initComponents();
     }
 
@@ -110,29 +110,29 @@ public class MenuGame extends JPanel {
         bg.add(jRadioMin3);
         bg.add(jRadioMin4);
         bg.add(jRadioMin5);
-        ActionListener actionListener = e->{
-          switch (e.getActionCommand()){
-              case "lm1":{
-                  mines = 10;
-                  break;
-              }
-              case "lm2":{
-                  mines = 20;
-                  break;
-              }
-              case "lm3":{
-                  mines = 40;
-                  break;
-              }
-              case "lm4":{
-                  mines = 100;
-                  break;
-              }
-              case "lm5":{
-                  mines = 120;
-                  break;
-              }
-          }
+        ActionListener actionListener = e -> {
+            switch (e.getActionCommand()) {
+                case "lm1": {
+                    mines = 10;
+                    break;
+                }
+                case "lm2": {
+                    mines = 20;
+                    break;
+                }
+                case "lm3": {
+                    mines = 40;
+                    break;
+                }
+                case "lm4": {
+                    mines = 100;
+                    break;
+                }
+                case "lm5": {
+                    mines = 120;
+                    break;
+                }
+            }
         };
         jRadioMin1.addActionListener(actionListener);
         jRadioMin1.setActionCommand("lm1");
@@ -154,18 +154,15 @@ public class MenuGame extends JPanel {
 
         JPanel start = new JPanel();
         start.setPreferredSize(new Dimension(200, 50));
-        start.setBackground(new Color(48,56,58));
+        start.setBackground(new Color(48, 56, 58));
         JButton jbstart = new JButton("Start");
-        jbstart.setBackground(new Color(146,166,170));
+        jbstart.setBackground(new Color(146, 166, 170));
         start.add(jbstart);
         ActionListener aL = e -> {
-                chooseBoardListener.chooseBoardPerformed(sizeBoard, sizeBoard, mines);
+            chooseBoardListener.chooseBoardPerformed(sizeBoard, sizeBoard, mines);
         };
         jbstart.addActionListener(aL);
         start.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(start);
-
-
     }
-
 }

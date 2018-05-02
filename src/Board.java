@@ -4,16 +4,14 @@ import java.awt.event.*;
 import java.awt.geom.GeneralPath;
 
 public class Board extends JPanel implements MouseMotionListener, MouseListener, GameListener {
+
     private static final int SIZE_CELL_1 = 20;
     private static final int SIZE_CELL_2 = (int) (SIZE_CELL_1 * Math.sqrt(3));
     private static final Color COLOR_CELL_NOT_OPEN = new Color(249, 175, 57);
     private static final Color COLOR_CELL_OPEN = new Color(11, 164, 195);
 
-    private GeneralPath generalPath;
-
-
     private void patinGeneralPath(double x, double y, Graphics2D gr2d, Color color) {
-        generalPath = new GeneralPath();
+        GeneralPath generalPath = new GeneralPath();
 
         generalPath.moveTo(x, y);
         generalPath.lineTo(x, y + SIZE_CELL_1);
@@ -30,25 +28,25 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener,
 
     private Cell[][] stateBoard = null;
 
-
     private ActionBoardListener actionBoardListener;
 
-    private Image[] imagesNums = null;
+    private Image[] imagesNums;
 
     private boolean isEndGame = false;
 
     public Board() {
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
+        Icons.loadIcon();
         imagesNums = Icons.getArrayNum();
     }
 
     public void setStateBoard(Cell[][] stateBoard) {
         this.stateBoard = stateBoard;
 
-        int widthBoard =  stateBoard.length * SIZE_CELL_2 + SIZE_CELL_1;
+        int widthBoard = stateBoard.length * SIZE_CELL_2 + SIZE_CELL_1;
 
-        this.setPreferredSize(new Dimension(widthBoard, 3*SIZE_CELL_1*stateBoard.length/2+SIZE_CELL_1/2));
+        this.setPreferredSize(new Dimension(widthBoard, 3 * SIZE_CELL_1 * stateBoard.length / 2 + SIZE_CELL_1 / 2));
     }
 
     @Override
@@ -93,7 +91,6 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener,
                 }
             }
         }
-
 
         // игра закончена
         if (isEndGame) {
@@ -141,7 +138,6 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener,
         } else {
             xCell = (e.getX() - SIZE_CELL_2 / 2) / SIZE_CELL_2;
         }
-
         if (SwingUtilities.isRightMouseButton(e)) {
             actionBoardListener.onMarkCell(xCell, yCell);
         } else {

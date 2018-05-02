@@ -18,22 +18,22 @@ public class MainFrame extends JFrame implements GameListener {
         countFlag.setText(String.format("%03d", flag));
     }
 
-    public void setAcb(ActionBoardListener acb){
-        this.acb=acb;
+    public void setAcb(ActionBoardListener acb) {
+        this.acb = acb;
     }
 
-    private JLabel timePlay;
+    private JLabel jLTimePlay;
 
-    private int thoigianchoi = 0;
-    private int phut = 0;
-    private int giay = 0;
+    private int timePlay = 0;
+    private int minute = 0;
+    private int seconds = 0;
     private Timer timer = new Timer(1000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            thoigianchoi++;
-            phut = thoigianchoi / 60;
-            giay = thoigianchoi % 60;
-            timePlay.setText(String.format("%02d", phut) + ":" + String.format("%02d", giay));
+            timePlay++;
+            minute = timePlay / 60;
+            seconds = timePlay % 60;
+            jLTimePlay.setText(String.format("%02d", minute) + ":" + String.format("%02d", seconds));
         }
     });
 
@@ -50,9 +50,9 @@ public class MainFrame extends JFrame implements GameListener {
         this.add(menuGame, "MENUGAME");
 
         JPanel panelWrapBoard = new JPanel(new BorderLayout());
-        panelWrapBoard.setBackground(new Color(48,56,58));
+        panelWrapBoard.setBackground(new Color(48, 56, 58));
         JPanel headJPanel = new JPanel();
-        headJPanel.setBorder(new LineBorder(new Color(48,56,58),2));
+        headJPanel.setBorder(new LineBorder(new Color(48, 56, 58), 2));
         headJPanel.setLayout(new BorderLayout());
         headJPanel.setBackground(new Color(249, 175, 57));
         panelWrapBoard.add(headJPanel, BorderLayout.NORTH);
@@ -81,13 +81,12 @@ public class MainFrame extends JFrame implements GameListener {
         countFlag = new JLabel();
         countFlag.setIcon(new ImageIcon(Icons.getFlag().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
         countFlag.setText("0");
-        timePlay = new JLabel();
-        timePlay.setIcon(new ImageIcon(Icons.getTimer().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
-        timePlay.setText("00:00");
+        jLTimePlay = new JLabel();
+        jLTimePlay.setIcon(new ImageIcon(Icons.getTimer().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+        jLTimePlay.setText("00:00");
         timeAndFlag.add(countFlag);
-        timeAndFlag.add(timePlay);
+        timeAndFlag.add(jLTimePlay);
         headJPanel.add(timeAndFlag, BorderLayout.EAST);
-
 
         panelWrapBoard.add(board, BorderLayout.CENTER);
 
@@ -114,21 +113,21 @@ public class MainFrame extends JFrame implements GameListener {
     }
 
     private void setTimePlay() {
-        phut = 0;
-        giay = 0;
-        thoigianchoi = 0;
-        timePlay.setText("00:00");
+        minute = 0;
+        seconds = 0;
+        timePlay = 0;
+        jLTimePlay.setText("00:00");
     }
 
     private int showGameOverLose() {
-        return JOptionPane.showOptionDialog(this, "Chơi ngu vcl", "DIALOG",
+        return JOptionPane.showOptionDialog(this, "Game over :(", "You lose",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                 new String[]{"Restart", "Menu"}, "default");
     }
 
     private int showGameOverWin() {
         return JOptionPane.showOptionDialog(this,
-                "You Win\nTimePlay: " + String.format("%02d",phut) + ":" + String.format("%02d",giay), "Winer",
+                "You Win\nTimePlay: " + String.format("%02d", minute) + ":" + String.format("%02d", seconds), "Winer",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null, new String[]{"Restart", "Menu"}, "default");
