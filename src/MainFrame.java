@@ -4,12 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainFrame extends JFrame implements GameListener {
+public class MainFrame extends JFrame {
 
     private MenuGame menuGame;
     private Board board;
 
-    private ActionBoardListener acb;
+    private Game acb;
 
     private JLabel countFlag;
 
@@ -18,7 +18,7 @@ public class MainFrame extends JFrame implements GameListener {
         countFlag.setText(String.format("%03d", flag));
     }
 
-    public void setAcb(ActionBoardListener acb) {
+    public void setGame(Game acb) {
         this.acb = acb;
     }
 
@@ -45,7 +45,7 @@ public class MainFrame extends JFrame implements GameListener {
         this.board = board;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new CardLayout(10, 10));
+        this.setLayout(new CardLayout(2, 2));
 
         this.add(menuGame, "MENUGAME");
 
@@ -66,7 +66,7 @@ public class MainFrame extends JFrame implements GameListener {
             if (e.getSource() == menuJButton) {
                 this.showMenuGame();
             } else {
-                acb.clickRestart();
+                acb.restartGame();
             }
         };
         menuJButton.addActionListener(ali);
@@ -133,7 +133,6 @@ public class MainFrame extends JFrame implements GameListener {
                 null, new String[]{"Restart", "Menu"}, "default");
     }
 
-    @Override
     public void onRestartGame() {
         showBoardGame();
         pack();
@@ -142,7 +141,6 @@ public class MainFrame extends JFrame implements GameListener {
         timer.start();
     }
 
-    @Override
     public int onGameOver(boolean playerWin) {
         timer.stop();
         repaint();

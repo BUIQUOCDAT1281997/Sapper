@@ -3,12 +3,31 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.GeneralPath;
 
-public class Board extends JPanel implements MouseMotionListener, MouseListener, GameListener {
+public class Board extends JPanel implements MouseMotionListener, MouseListener {
 
     private static final int SIZE_CELL_1 = 20;
     private static final int SIZE_CELL_2 = (int) (SIZE_CELL_1 * Math.sqrt(3));
     private static final Color COLOR_CELL_NOT_OPEN = new Color(249, 175, 57);
     private static final Color COLOR_CELL_OPEN = new Color(11, 164, 195);
+
+    private Cell[][] stateBoard = null;
+
+    private Game game;
+
+    private Image[] imagesNums;
+
+    private boolean isEndGame = false;
+
+    Board() {
+        this.addMouseMotionListener(this);
+        this.addMouseListener(this);
+        Icons.loadIcon();
+        imagesNums = Icons.getArrayNum();
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
     private void patinGeneralPath(double x, double y, Graphics2D gr2d, Color color) {
         GeneralPath generalPath = new GeneralPath();
@@ -26,26 +45,9 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener,
         gr2d.draw(generalPath);
     }
 
-    private Cell[][] stateBoard = null;
-
-    private ActionBoardListener actionBoardListener;
-
-    private Image[] imagesNums;
-
-    private boolean isEndGame = false;
-
-    public Board() {
-        this.addMouseMotionListener(this);
-        this.addMouseListener(this);
-        Icons.loadIcon();
-        imagesNums = Icons.getArrayNum();
-    }
-
     public void setStateBoard(Cell[][] stateBoard) {
         this.stateBoard = stateBoard;
-
         int widthBoard = stateBoard.length * SIZE_CELL_2 + SIZE_CELL_1;
-
         this.setPreferredSize(new Dimension(widthBoard, 3 * SIZE_CELL_1 * stateBoard.length / 2 + SIZE_CELL_1 / 2));
     }
 
@@ -97,7 +99,7 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener,
             for (int i = 0; i < stateBoard.length; i++) {
                 if (i % 2 == 0) {
                     for (int j = 0; j < stateBoard[i].length; j++) {
-                        int xFrom = (int) (SIZE_CELL_2 * j);
+                        int xFrom = SIZE_CELL_2 * j;
                         int yFrom = (3 * SIZE_CELL_1) * i / 2 + SIZE_CELL_1 / 2;
 
                         if (stateBoard[i][j].getBom()) {
@@ -117,18 +119,6 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener,
         }
     }
 
-    public void setActionBoardListener(ActionBoardListener actionBoardListener) {
-        this.actionBoardListener = actionBoardListener;
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
         int yCell = 2 * e.getY() / (3 * SIZE_CELL_1);
@@ -139,10 +129,14 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener,
             xCell = (e.getX() - SIZE_CELL_2 / 2) / SIZE_CELL_2;
         }
         if (SwingUtilities.isRightMouseButton(e)) {
-            actionBoardListener.onMarkCell(xCell, yCell);
+            game.onMarkCell(xCell, yCell);
         } else {
-            actionBoardListener.onOpenCell(xCell, yCell);
+            game.onOpenCell(xCell, yCell);
         }
+    }
+
+    public void setEndGame(boolean b) {
+        isEndGame = b;
     }
 
     @Override
@@ -166,14 +160,10 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener,
     }
 
     @Override
-    public void onRestartGame() {
-        isEndGame = false;
+    public void mouseDragged(MouseEvent e) {
     }
 
     @Override
-    public int onGameOver(boolean playerWin) {
-        this.isEndGame = true;
-        repaint();
-        return 0;
+    public void mouseMoved(MouseEvent e) {
     }
 }

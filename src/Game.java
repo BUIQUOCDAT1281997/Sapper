@@ -1,26 +1,25 @@
 import javax.swing.*;
 import java.util.Random;
 
-public class Game implements ChooseBoardListener, ActionBoardListener {
+public class Game {
 
     private Cell[][] stateBoard = null;
     private int row, column, totalMine;
 
     private MainFrame mainFrame;
-    private MenuGame menuGame;
     private Board board;
 
     private int countMark = totalMine;
     private int countCellOpen = 0;
 
-    public Game() {
-        menuGame = new MenuGame();
-        menuGame.setChooseBoardListener(this);
+    private Game() {
+        MenuGame menuGame = new MenuGame();
+        menuGame.setGame(this);
         board = new Board();
-        board.setActionBoardListener(this);
+        board.setGame(this);
 
         mainFrame = new MainFrame(menuGame, board);
-        mainFrame.setAcb(this);
+        mainFrame.setGame(this);
 
         mainFrame.setVisible(true);
     }
@@ -112,13 +111,13 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
         }
     }
 
-    @Override
     public void onOpenCell(int x, int y) {
         if (stateBoard[y][x].getMark() || stateBoard[y][x].getOpen()) {
             return;
         }
         if (stateBoard[y][x].getBom()) {
-            board.onGameOver(false);
+            board.setEndGame(true);
+            board.repaint();
             if (mainFrame.onGameOver(false) == JOptionPane.OK_OPTION) {
                 restartGame();
             } else {
@@ -127,7 +126,7 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
         } else {
             eatFreeCell(x, y);
             if (countCellOpen == column * row - totalMine) {
-                board.onGameOver(true);
+                board.setEndGame(true);
                 if (mainFrame.onGameOver(true) == JOptionPane.OK_OPTION) {
                     restartGame();
                 } else {
@@ -139,7 +138,6 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
         }
     }
 
-    @Override
     public void onMarkCell(int x, int y) {
         if (stateBoard[y][x].getOpen()) {
             return;
@@ -239,23 +237,18 @@ public class Game implements ChooseBoardListener, ActionBoardListener {
         }
     }
 
-    private void restartGame() {
+    public void restartGame() {
         createBoard(row, column, totalMine);
         countMark = totalMine;
         countCellOpen = 0;
+
         board.setStateBoard(stateBoard);
-        board.onRestartGame();
+        board.setEndGame(false);
+
         mainFrame.setCountFlag(totalMine);
         mainFrame.onRestartGame();
     }
 
-    @Override
-    public void clickRestart() {
-        restartGame();
-    }
-
-
-    @Override
     public void chooseBoardPerformed(int row, int column, int mines) {
         this.row = row;
         this.column = column;

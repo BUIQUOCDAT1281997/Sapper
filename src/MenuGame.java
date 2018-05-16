@@ -8,7 +8,7 @@ public class MenuGame extends JPanel {
     private final Color COLORBK = new Color(249, 175, 57);
     private final Color COLORLINE = new Color(220, 236, 240);
 
-    private ChooseBoardListener chooseBoardListener;
+    private Game game;
 
     private JRadioButton jRadioMin4;
     private JRadioButton jRadioMin5;
@@ -25,8 +25,8 @@ public class MenuGame extends JPanel {
         initComponents();
     }
 
-    public void setChooseBoardListener(ChooseBoardListener chooseBoardListener) {
-        this.chooseBoardListener = chooseBoardListener;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     private void initComponents() {
@@ -159,7 +159,7 @@ public class MenuGame extends JPanel {
         jbstart.setBackground(new Color(146, 166, 170));
         start.add(jbstart);
         ActionListener aL = e -> {
-            chooseBoardListener.chooseBoardPerformed(sizeBoard, sizeBoard, mines);
+            game.chooseBoardPerformed(sizeBoard, sizeBoard, mines);
         };
         jbstart.addActionListener(aL);
         start.setLayout(new FlowLayout(FlowLayout.CENTER));
