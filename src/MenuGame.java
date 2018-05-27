@@ -34,6 +34,7 @@ public class MenuGame extends JPanel {
         selectionSize.setBorder(new LineBorder(COLORLINE, 3));
         selectionSize.setPreferredSize(new Dimension(200, 120));
         selectionSize.setBackground(COLORBK);
+
         JLabel chonkt = new JLabel("Select the size of the board");
         JRadioButton choose1 = new JRadioButton("Size 8x8");
         JRadioButton choose2 = new JRadioButton("Size 16x16");

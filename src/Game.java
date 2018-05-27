@@ -12,7 +12,7 @@ public class Game {
     private int countMark = totalMine;
     private int countCellOpen = 0;
 
-    private Game() {
+    public Game() {
         MenuGame menuGame = new MenuGame();
         menuGame.setGame(this);
         board = new Board();
@@ -24,7 +24,8 @@ public class Game {
         mainFrame.setVisible(true);
     }
 
-    private void eatFreeCell(int x, int y) {
+
+    public void eatFreeCell(int x, int y) {
         if (x < 0 || x >= column || y < 0 || y >= row) {
             return;
         }
@@ -159,7 +160,7 @@ public class Game {
         mainFrame.repaint();
     }
 
-    private void createBoard(int row, int column, int mine) {
+    public void createBoard() {
         stateBoard = new Cell[row][column];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
@@ -170,7 +171,7 @@ public class Game {
         // (Random mines)
         int countMineRand = 0;
         Random random = new Random();
-        while (countMineRand < mine) {
+        while (countMineRand < totalMine) {
             int y = random.nextInt(row);
             int x = random.nextInt(column);
             if (!stateBoard[y][x].getBom()) {
@@ -238,7 +239,7 @@ public class Game {
     }
 
     public void restartGame() {
-        createBoard(row, column, totalMine);
+        this.createBoard();
         countMark = totalMine;
         countCellOpen = 0;
 
@@ -254,6 +255,12 @@ public class Game {
         this.column = column;
         this.totalMine = mines;
         restartGame();
+    }
+    public Cell[][] getStateBoard(){
+        return this.stateBoard;
+    }
+    public void setMainFrame(boolean b){
+        mainFrame.setVisible(b);
     }
 
     public static void main(String[] args) {

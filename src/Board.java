@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.GeneralPath;
 
-public class Board extends JPanel implements MouseMotionListener, MouseListener {
+public class Board extends JPanel implements  MouseListener {
 
     private static final int SIZE_CELL_1 = 20;
     private static final int SIZE_CELL_2 = (int) (SIZE_CELL_1 * Math.sqrt(3));
@@ -19,9 +19,7 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener 
     private boolean isEndGame = false;
 
     Board() {
-        this.addMouseMotionListener(this);
         this.addMouseListener(this);
-        Icons.loadIcon();
         imagesNums = Icons.getArrayNum();
     }
 
@@ -157,13 +155,5 @@ public class Board extends JPanel implements MouseMotionListener, MouseListener 
     @Override
     public void mouseExited(MouseEvent e) {
 
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
     }
 }
