@@ -113,6 +113,9 @@ public class Game {
     }
 
     public void onOpenCell(int x, int y) {
+        if (x < 0 || x >= column || y < 0 || y >= row) {
+            return;
+        }
         if (stateBoard[y][x].getMark() || stateBoard[y][x].getOpen()) {
             return;
         }
@@ -140,6 +143,9 @@ public class Game {
     }
 
     public void onMarkCell(int x, int y) {
+        if (x < 0 || x >= column || y < 0 || y >= row) {
+            return;
+        }
         if (stateBoard[y][x].getOpen()) {
             return;
         }
@@ -258,9 +264,6 @@ public class Game {
     }
     public Cell[][] getStateBoard(){
         return this.stateBoard;
-    }
-    public void setMainFrame(boolean b){
-        mainFrame.setVisible(b);
     }
 
     public static void main(String[] args) {

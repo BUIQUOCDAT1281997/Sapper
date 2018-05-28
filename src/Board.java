@@ -124,7 +124,19 @@ public class Board extends JPanel implements  MouseListener {
         if (yCell % 2 == 0) {
             xCell = e.getX() / (SIZE_CELL_2);
         } else {
+            if (e.getX()<SIZE_CELL_2/2){
+                return;
+            }
             xCell = (e.getX() - SIZE_CELL_2 / 2) / SIZE_CELL_2;
+        }
+        int mx= e.getX()-xCell*SIZE_CELL_2;
+        if (yCell==0){
+            if (mx<SIZE_CELL_2/2&&(e.getY()<(SIZE_CELL_1/2-mx*Math.tan(Math.PI/6)))){
+                return; //neu no nho hon nua kich thuoc thu 2
+            }
+            if (mx>SIZE_CELL_2/2 &&(e.getY()<SIZE_CELL_1/2-(SIZE_CELL_2-mx)*Math.tan(Math.PI/6))){
+                return; // neu no lon hon nua kich thuoc thu 2
+            }
         }
         if (SwingUtilities.isRightMouseButton(e)) {
             game.onMarkCell(xCell, yCell);

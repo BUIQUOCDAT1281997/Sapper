@@ -12,6 +12,7 @@ public class MenuGame extends JPanel {
 
     private JRadioButton jRadioMin4;
     private JRadioButton jRadioMin5;
+    private JRadioButton jRadioMin1;
 
     private int sizeBoard = 8;
     private int mines = 10;
@@ -61,12 +62,20 @@ public class MenuGame extends JPanel {
                     sizeBoard = 8;
                     jRadioMin4.setEnabled(false);
                     jRadioMin5.setEnabled(false);
+                    if (jRadioMin4.isSelected()||jRadioMin5.isSelected()){
+                        jRadioMin1.setSelected(true);
+                        mines=10;
+                    }
                     break;
                 }
                 case "lc2": {
                     sizeBoard = 16;
                     jRadioMin4.setEnabled(true);
                     jRadioMin5.setEnabled(false);
+                    if (jRadioMin5.isSelected()){
+                        jRadioMin1.setSelected(true);
+                        mines=10;
+                    }
                     break;
                 }
                 case "lc3": {
@@ -92,7 +101,7 @@ public class MenuGame extends JPanel {
         selectnMin.setBackground(COLORBK);
         JLabel head = new JLabel("Select the number of mines");
         selectnMin.add(head);
-        JRadioButton jRadioMin1 = new JRadioButton("10 mines");
+        jRadioMin1 = new JRadioButton("10 mines");
         JRadioButton jRadioMin2 = new JRadioButton("20 mines");
         JRadioButton jRadioMin3 = new JRadioButton("40 mines");
         jRadioMin4 = new JRadioButton("100 mines");
